@@ -35,11 +35,21 @@ const totalScore = document.getElementById('totalScore');
 const percentage = document.getElementById('percentage');
 const submitStatus = document.getElementById('submitStatus');
 
+// QR Code elements
+const qrCodeBtn = document.getElementById('qrCodeBtn');
+const qrCodeModal = document.getElementById('qrCodeModal');
+const qrModalClose = document.getElementById('qrModalClose');
+const qrCodeContainer = document.getElementById('qrcode');
+
+// QR Code URL
+const QUIZ_URL = 'https://leonardocosmote.github.io/quiz/';
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadQuestions();
     attachEventListeners();
     setupIncompleteQuizTracking();
+    setupQRCode();
 });
 
 // Track incomplete quizzes when user leaves
@@ -73,6 +83,90 @@ function attachEventListeners() {
         userNameInput.addEventListener('input', () => {
             nameError.classList.add('hidden');
         });
+    }
+}
+
+// Setup QR Code functionality
+function setupQRCode() {
+    if (!qrCodeBtn || !qrCodeModal || !qrModalClose) return;
+
+    // Open modal when button is clicked
+    qrCodeBtn.addEventListener('click', () => {
+        showQRCode();
+    });
+
+    // Close modal when X is clicked
+    qrModalClose.addEventListener('click', () => {
+        hideQRCode();
+    });
+
+    // Close modal when clicking outside
+    qrCodeModal.addEventListener('click', (e) => {
+        if (e.target === qrCodeModal) {
+            hideQRCode();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !qrCodeModal.classList.contains('hidden')) {
+            hideQRCode();
+        }
+    });
+}
+
+// Show QR Code modal and generate QR code
+function showQRCode() {
+    if (!qrCodeModal || !qrCodeContainer) return;
+
+    // Clear previous QR code
+    qrCodeContainer.innerHTML = '';
+
+    // Show modal first
+    qrCodeModal.classList.remove('hidden');
+
+    // Check if library is loaded
+    if (typeof QRCode === 'undefined') {
+        // Try waiting a bit for library to load
+        let attempts = 0;
+        const maxAttempts = 10;
+        
+        const checkLibrary = setInterval(() => {
+            attempts++;
+            if (typeof QRCode !== 'undefined') {
+                clearInterval(checkLibrary);
+                generateQRCode();
+            } else if (attempts >= maxAttempts) {
+                clearInterval(checkLibrary);
+                qrCodeContainer.innerHTML = '<p style="color: #f85149; padding: 20px;">QR Code library failed to load.<br>Please check your internet connection and refresh the page.</p>';
+            }
+        }, 200);
+    } else {
+        generateQRCode();
+    }
+
+    function generateQRCode() {
+        try {
+            // Use QRCode.js library
+            new QRCode(qrCodeContainer, {
+                text: QUIZ_URL,
+                width: 256,
+                height: 256,
+                colorDark: '#0d1117',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        } catch (error) {
+            console.error('QR Code generation error:', error);
+            qrCodeContainer.innerHTML = '<p style="color: #f85149; padding: 20px;">Error generating QR code.<br>Please try again.</p>';
+        }
+    }
+}
+
+// Hide QR Code modal
+function hideQRCode() {
+    if (qrCodeModal) {
+        qrCodeModal.classList.add('hidden');
     }
 }
 
