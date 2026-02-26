@@ -46,8 +46,8 @@ function initializeSheet() {
       "User Name",
       "Score",
       "Total Questions",
-      "Percentage",
       "Completed",
+      "Percentage",
       "Answers JSON"
     ];
     
@@ -92,8 +92,8 @@ function doPost(e) {
       userName,
       score,
       totalQuestions,
-      percentage,
       completed ? "Yes" : "No",
+      percentage,
       answersJSON
     ]);
     
