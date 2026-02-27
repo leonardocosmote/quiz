@@ -48,20 +48,20 @@
         <!-- Start Screen -->
         <div id="startScreen" class="view active">
             <div class="header">
-                <h1>🎉 Καλώς ήλθες στο Διαδραστικό Quiz του R&D!</h1>
+                <h1>🎉 Καλώς ήλθες στο Quiz του R&D!</h1>
                 <h4>Πόσο καλά γνωρίζεις το R&D του Ομίλου ΟΤΕ;</h4>
             </div>
             <p class="start-description" style="color: #8b949e; font-size: 16px;">
                 Απάντησε σε 10 σύντομες ερωτήσεις και δες live πώς τα πήγες!<br>
-                Μάθε τι κάνει το <span style="font-weight: bold; color: aliceblue;">R&D</span>, σε ποιες τεχνολογίες
-                δραστηριοποιείται και ποιες λύσεις αναπτύσσει.
+                <!-- Μάθε τι κάνει το <span style="font-weight: bold; color: aliceblue;">R&D</span>, σε ποιες τεχνολογίες
+                δραστηριοποιείται και ποιες λύσεις αναπτύσσει. -->
             </p>
             <br>
             <div class="input-group">
                 <input type="text" id="userName" placeholder="Ονομάζομαι ..." required>
                 <p id="nameError" class="error hidden">Παρακαλούμε γράψε το όνομά σου πριν ξεκινήσεις το quiz!</p>
             </div>
-            <button id="startBtn" class="btn primary-btn">Ξεκινήστε το Quiz</button>
+            <button id="startBtn" class="btn primary-btn">Ξεκινήσε το Quiz</button>
         </div>
 
         <!-- Quiz Screen -->
@@ -89,12 +89,13 @@
         <div id="resultsScreen" class="view">
             <div class="results-content">
                 <h2>🎉 Μπράβο!</h2>
-                <p style="color: #8b949e; margin-bottom: 20px;">Ολοκλήρωσες το Διαδραστικό Quiz του <span style="font-weight: bold; color: aliceblue;">R&D</span>!<br>Τώρα ξέρεις πολύ
+                <p style="color: #8b949e; margin-bottom: 20px;">Ολοκλήρωσες το Quiz του <span
+                        style="font-weight: bold; color: aliceblue;">R&D</span>!<br>Τώρα ξέρεις πολύ
                     περισσότερα για εμάς!</p>
 
                 <div class="final-score-circle">
                     <div id="final-score">0</div>
-                    <div class="total">από<span id="totalScore">5</span></div>
+                    <div class="total">από <span id="totalScore">5</span></div>
                 </div>
                 <p class="result-msg" style="margin-top: 15px;"><span id="resultUserName"></span></p>
                 <p class="percentage" id="percentage"></p>
@@ -102,12 +103,14 @@
                 <div style="display:flex; flex-direction: column; gap:10px; margin-top:20px;">
                     <div style="display:flex; gap:10px; width: 100%;">
                         <!-- Submit button kept for status logic but hidden (auto-submit is used) -->
-                        <button id="submitBtn" class="btn primary-btn" style="flex: 1; display:none;">Υποβολή Βαθμολογίας</button>
+                        <button id="submitBtn" class="btn primary-btn" style="flex: 1; display:none;">Υποβολή
+                            Βαθμολογίας</button>
                         <button id="retryBtn" class="btn secondary-btn" style="flex: 1;">Ξανακάνε το Quiz</button>
                     </div>
                     <div style="display:flex; gap:10px; width: 100%;">
                         <a href="https://www.cosmote.gr/static/otegroup/el/page/ereuna_kai_kainotomia" target="_blank"
-                            class="btn secondary-btn" style="flex: 1; text-align: center; text-decoration: none;">Περισσότερα
+                            class="btn secondary-btn"
+                            style="flex: 1; text-align: center; text-decoration: none;">Περισσότερα
                             για το R&D του Ομίλου ΟΤΕ</a>
                     </div>
                 </div>

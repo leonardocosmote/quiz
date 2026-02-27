@@ -62,7 +62,7 @@ function setupIncompleteQuizTracking() {
             submitIncompleteQuizSync();
         }
     });
-    
+
     // Also track visibility change (tab switch, minimize, etc.)
     document.addEventListener('visibilitychange', () => {
         if (document.hidden && quizState.userName && quizState.answers.length >= 3 && !quizState.isCompleted) {
@@ -78,10 +78,17 @@ function attachEventListeners() {
     // submitBtn.addEventListener('click', submitScore);
     retryBtn.addEventListener('click', retakeQuiz);
 
-    // Clear inline error as user types
+    // Clear inline error as user types and prevent numbers
     if (userNameInput && nameError) {
-        userNameInput.addEventListener('input', () => {
-            nameError.classList.add('hidden');
+        userNameInput.addEventListener('input', (e) => {
+            // Remove any numbers from the input immediately
+            if (/\d/.test(e.target.value)) {
+                e.target.value = e.target.value.replace(/\d/g, '');
+                nameError.textContent = 'Το όνομά σου δεν πρέπει να περιέχει αριθμούς!';
+                nameError.classList.remove('hidden');
+            } else {
+                nameError.classList.add('hidden');
+            }
         });
     }
 }
@@ -130,7 +137,7 @@ function showQRCode() {
         // Try waiting a bit for library to load
         let attempts = 0;
         const maxAttempts = 10;
-        
+
         const checkLibrary = setInterval(() => {
             attempts++;
             if (typeof QRCode !== 'undefined') {
@@ -205,6 +212,15 @@ function startQuiz() {
 
     if (!name) {
         if (nameError) {
+            nameError.textContent = 'Παρακαλούμε γράψε το όνομά σου πριν ξεκινήσεις το quiz!';
+            nameError.classList.remove('hidden');
+        }
+        return;
+    }
+
+    if (/\d/.test(name)) {
+        if (nameError) {
+            nameError.textContent = 'Το όνομά σου δεν πρέπει να περιέχει αριθμούς!';
             nameError.classList.remove('hidden');
         }
         return;
@@ -306,7 +322,7 @@ function selectAnswer(selectedIndex, correctIndex) {
     setTimeout(() => {
         quizState.currentQuestionIndex++;
         displayQuestion();
-    }, 4000); // Increased delay so user can read feedback
+    }, 5000); // Increased delay to 8 seconds so user can deeply read feedback
 }
 
 // Show Results
@@ -320,7 +336,7 @@ function showResults() {
     const percentageValue = Math.round((quizState.score / quizState.questions.length) * 100);
     percentage.textContent = `${percentageValue}% Σωστές απαντήσεις`;
 
-    submitStatus.innerHTML = 'Ελπίζουμε να έμαθες κάτι παραπάνω για τις δράσεις μας!';
+    // submitStatus.innerHTML = 'Ελπίζουμε να έμαθες κάτι παραπάνω για τις δράσεις μας!';
     submitStatus.className = 'submit-status';
 
     // Mark as completed before submitting
@@ -418,7 +434,7 @@ async function submitScore() {
             mode: 'no-cors'
         });
 
-        submitStatus.innerHTML = submitStatus.innerHTML + '<br>✓ Eυχαριστούμε που συμμετέχατε!';
+        submitStatus.innerHTML = submitStatus.innerHTML + '<br>✓ Ευχαριστούμε που συμμετείχες!';
         // submitStatus.className = 'submit-status success';
 
         // setTimeout(() => {
