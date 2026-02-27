@@ -335,8 +335,7 @@ function showResults() {
 
     const percentageValue = Math.round((quizState.score / quizState.questions.length) * 100);
     percentage.textContent = `${percentageValue}% Σωστές απαντήσεις`;
-
-    // submitStatus.innerHTML = 'Ελπίζουμε να έμαθες κάτι παραπάνω για τις δράσεις μας!';
+    submitStatus.innerHTML = '';
     submitStatus.className = 'submit-status';
 
     // Mark as completed before submitting
